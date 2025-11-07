@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 Int          @id @default(autoincrement())
+  email              String       @unique
+  password           String
+  boards             Board[]      @relation("OwnedBoards")
+  assignedCards      Card[]       @relation("AssignedCards")
+  comments           Comment[]
+  attachments        Attachment[]
+  collaboratedBoards Board[]      @relation("CollaboratedBoards")
+}
+
+model Board {
+  id            Int    @id @default(autoincrement())
+  title         String
+  ownerId       Int
+  owner         User   @relation("OwnedBoards", fields: [ownerId], references: [id])
+  collaborators User[] @relation("CollaboratedBoards")
+  cards         Card[]
+}
+
+model Card {
+  id          Int          @id @default(autoincrement())
+  title       String
+  description String?
+  assigneeId  Int?
+  dueDate     DateTime?
+  position    Int
+  listName    String // e.g., 'To Do' (or make a List model if lists are dynamic)
+  boardId     Int
+  board       Board        @relation(fields: [boardId], references: [id])
+  assignee    User?        @relation("AssignedCards", fields: [assigneeId], references: [id])
+  comments    Comment[]
+  attachments Attachment[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  text      String
+  userId    Int
+  cardId    Int
+  timestamp DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  card      Card     @relation(fields: [cardId], references: [id])
+}
+
+model Attachment {
+  id       Int    @id @default(autoincrement())
+  url      String
+  filename String
+  userId   Int
+  cardId   Int
+  user     User   @relation(fields: [userId], references: [id])
+  card     Card   @relation(fields: [cardId], references: [id])
+}
