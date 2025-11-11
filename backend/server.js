@@ -3,24 +3,41 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
-const io = require('socket.io')(server, { cors: { origin: '*' } });
+const io = require('socket.io')(server, { cors: {
+   origin: 'http://localhost:3000',
+   methods: ['GET', 'POST'],
+   transports: ['websocket', 'polling']
+   } 
+  });
 
 const { PrismaClient } = require('./generated/client/');
 const prisma = new PrismaClient();
 const jwt = require('jsonwebtoken');
 
 app.use(express.json());
-app.use(require('cors')());
+app.use(require('cors')({
+  origin: 'http://localhost:3000',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 const authRoutes = require('./routes/authRoutes');
 const boardRoutes = require('./routes/boardRoutes');
+const cardRoutes = require('./routes/cardRoutes');
+
+// Make io available to controllers
+app.set('io', io);
+
 app.use('/api/auth', authRoutes);
 app.use('/api/boards', boardRoutes);
+app.use('/api', cardRoutes);
 
-const protect = require('./middleware/authMiddleware');
-app.get('/api/test-protected', protect, (req, res) => {
-  res.json({ msg: `Hello user ${req.user.userId}` });
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error('Unhandled error:', err.stack || err);  // Log full stack
+  res.status(500).json({ msg: 'Internal server error', details: err.message || 'Unknown error' });
 });
+
 
 // Socket auth
 io.use((socket, next) => {
@@ -34,5 +51,9 @@ io.use((socket, next) => {
     next(new Error('Invalid token'));
   }
 });
+
+// Setup socket handlers
+const setupSockets = require('./sockets/index');
+setupSockets(io);
 
 server.listen(process.env.PORT || 5000, () => console.log('Server on port 5000'));

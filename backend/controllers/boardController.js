@@ -34,7 +34,7 @@ exports.generateShareToken = async (req, res) => {
 };
 
 // Redeem share token (add authenticated user as collaborator)
-exports.redeeemShareToken = async (req, res) => {
+exports.redeemShareToken = async (req, res) => {
     const { shareToken } = req.body;
     if (!shareToken) return res.status(400).json({ msg: 'Share token is required' });
 
@@ -49,7 +49,7 @@ exports.redeeemShareToken = async (req, res) => {
         });
         if (!board) return res.status(404).json({ msg: 'Board not found' });
 
-        // Check if user is already colllaborator or owner
+        // Check if user is already collaborator or owner
         if (board.ownerId === req.user.id || board.collaborators.some(c => c.id === req.user.id)) {
             return res.status(400).json({ msg: 'Already a member' });
         }
@@ -67,6 +67,25 @@ exports.redeeemShareToken = async (req, res) => {
     }
 };
 
+// Get all boards (owned + collaborated)
+exports.getUserBoards = async (req, res) => {
+  try {
+    const boards = await prisma.board.findMany({
+      where: {
+        OR: [
+          { ownerId: req.user.id },
+          { collaborators: { some: { id: req.user.id } } },
+        ],
+      },
+      include: { owner: true, collaborators: true },
+    });
+    res.json(boards);
+  } catch (err) {
+    console.error('Get boards error:', err);
+    res.status(500).json({ msg: 'Internal server error' });
+  }
+};
+
 // Get board (with access check)
 exports.getBoard = async (req, res) => {
   const boardId = req.params.id;
@@ -79,7 +98,7 @@ exports.getBoard = async (req, res) => {
 
     const board = await prisma.board.findUnique({
       where: { id: parseInt(boardId) },
-      include: { columns: true },
+      include: { cards: true, collaborators: true },
     });
     if (!board) {
       return res.status(404).json({ msg: 'Board not found' });
@@ -96,6 +115,8 @@ exports.getBoard = async (req, res) => {
 exports.createBoard = async (req, res) => {
   const { title } = req.body;
   if (!title) return res.status(400).json({ msg: 'Title is required' });
+
+  if (!req.user || !req.user.id) return res.status(401).json({ msg: 'Unauthorized' });
 
   try {
     const board = await prisma.board.create({
@@ -119,6 +140,10 @@ exports.updateBoard = async (req, res) => {
   if (!title) return res.status(400).json({ msg: 'Title is required' });
 
   try {
+    const canAccess = await canAccessBoard(req, boardId);
+    if (!canAccess) {
+      return res.status(403).json({ msg: 'Access denied' });
+    }
     const board = await prisma.board.update({
       where: { id: parseInt(boardId) },
       data: { title },
@@ -135,6 +160,13 @@ exports.deleteBoard = async (req, res) => {
   const boardId = req.params.id;
 
   try {
+    if (board.ownerId !== req.user.id) {
+      return res.status(403).json({ msg: 'Only the owner can delete the board' });
+    }
+    const canAccess = await canAccessBoard(req, boardId);
+    if (!canAccess) {
+      return res.status(403).json({ msg: 'Access denied' });
+    }
     const board = await prisma.board.delete({
       where: { id: parseInt(boardId) },
     });
