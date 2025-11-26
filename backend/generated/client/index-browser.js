@@ -141,7 +141,8 @@ exports.Prisma.CardScalarFieldEnum = {
   dueDate: 'dueDate',
   position: 'position',
   listName: 'listName',
-  boardId: 'boardId'
+  boardId: 'boardId',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.CommentScalarFieldEnum = {
@@ -149,7 +150,8 @@ exports.Prisma.CommentScalarFieldEnum = {
   text: 'text',
   userId: 'userId',
   cardId: 'cardId',
-  timestamp: 'timestamp'
+  timestamp: 'timestamp',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.AttachmentScalarFieldEnum = {

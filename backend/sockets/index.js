@@ -25,7 +25,7 @@ const setupSockets = (io) => {
           data: { listName: newList, position: newPosition },
           include: { assignee: true }
         });
-        io.to(boardId.toString()).emit('cardUpdated', updatedCard);
+        io.to(boardId.toString()).emit('cardUpdated', { card: updatedCard, user: socket.user });
       } catch (err) {
         console.error('Card move error:', err);
       }

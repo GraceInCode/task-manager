@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap');
+
+/* Subtle paper texture */
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #faf7f0;
+  background-image: 
+    radial-gradient(circle at 1px 1px, rgba(45, 41, 38, 0.03) 1px, transparent 0);
+  background-size: 20px 20px;
+}
+
+/* Custom scrollbar with personality */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f4f0e8;
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4a574;
+  border-radius: 0;
+  border: 1px solid #b8956a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b8956a;
+}
+
+/* Remove default transitions - we'll be intentional */
+* {
+  transition: none;
+}
+
+/* Torn paper effect */
+.torn-edge {
+  position: relative;
+}
+
+.torn-edge::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -2px;
+  width: 4px;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    #faf7f0 3px,
+    #faf7f0 6px
+  );
+}
+
+/* Dog ear effect */
+.dog-ear {
+  position: relative;
+}
+
+.dog-ear::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-top: 15px solid #e8ddd4;
+  z-index: 1;
+}
+
+/* Handwriting wobble */
+.handwriting {
+  transform: rotate(-0.5deg);
+  letter-spacing: 0.02em;
+}
+
+/* Ink blot cursor */
+.cursor-ink {
+  cursor: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='8' fill='%232d2926' opacity='0.8'/%3E%3Ccircle cx='12' cy='8' r='2' fill='%232d2926'/%3E%3C/svg%3E") 10 10, pointer;
+}
+
+/* Subtle hover animations */
+.hover-lift {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px) rotate(0.5deg);
+}
+
+.hover-tilt {
+  transition: transform 0.15s ease-out;
+}
+
+.hover-tilt:hover {
+  transform: rotate(-1deg);
+}
+
+.hover-wiggle:hover {
+  animation: wiggle 0.3s ease-in-out;
+}

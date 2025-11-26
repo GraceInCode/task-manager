@@ -3,6 +3,7 @@ const prisma = new PrismaClient();
 const multer = require('multer');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const cloudinary = require('cloudinary').v2;
+const sendEmail = require('../utils/email');
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -60,7 +61,7 @@ exports.createCard = async (req, res) => {
     });
 
     const io = req.app.get('io');
-    io.to(boardId.toString()).emit('cardUpdated', card);
+    io.to(boardId.toString()).emit('cardUpdated', { card, user: req.user });
 
     res.status(201).json(card);
   } catch (err) {
@@ -71,7 +72,7 @@ exports.createCard = async (req, res) => {
 // Update card
 exports.updateCard = async (req, res) => {
   const cardId = parseInt(req.params.id);
-  const { title, description, listName, position } = req.body;
+  const { title, description, listName, position, clientUpdatedAt, assigneeId } = req.body;
 
   try {
     const card = await prisma.card.findUnique({ where: { id: cardId }, include: { board: true } });
@@ -80,13 +81,24 @@ exports.updateCard = async (req, res) => {
     const canAccess = await canAccessBoard(req, card.boardId);
     if (!canAccess) return res.status(403).json({ msg: 'Access denied' });
 
+    if (new Date(card.updatedAt) > new Date(clientUpdatedAt)) {
+      return res.status(409).json({ msg: 'Conflict: Card updated by another user. Retry the request', currentCard: card }); 
+    }
+
+    if (assigneeId && assigneeId !== card.assigneeId) {
+      const assignee = await prisma.user.findUnique({ where: { id: assigneeId } });
+      if (assignee) {
+        sendEmail(assignee.email, 'New Task Assigned', `You have been assigned a new task: ${card.title} on board ${card.board.title}`);
+      }
+    } 
+
     const updatedCard = await prisma.card.update({
       where: { id: cardId },
       data: { title, description, listName, position },
       include: { assignee: true }
     });
     const io = req.app.get('io');
-    io.to(card.boardId.toString()).emit('cardUpdated', updatedCard);
+    io.to(card.boardId.toString()).emit('cardUpdated', { card: updatedCard, user: req.user });
     res.json(updatedCard);
   } catch (err) {
     console.error('Update card error:', err);
@@ -120,7 +132,7 @@ exports.getComments = async (req, res) => {
 // Add Comment
 exports.addComment = async (req, res) => {
   const cardId = parseInt(req.params.id);
-  const { text } = req.body;
+  const { text, clientUpdatedAt } = req.body;
   if (!text) return res.status(400).json({ msg: 'Text required' });
 
   try {
@@ -130,11 +142,15 @@ exports.addComment = async (req, res) => {
     const canAccess = await canAccessBoard(req, card.boardId);
     if (!canAccess) return res.status(403).json({ msg: 'Access denied' });
 
+    if (new Date(card.updatedAt) > new Date(clientUpdatedAt)) {
+      return res.status(409).json({ msg: 'Conflict: Card updated by another user. Retry the request', currentCard: card }); 
+    }
+
     const comment = await prisma.comment.create({
       data: { text, userId: req.user.id, cardId },
     });
     const io = req.app.get('io');
-    io.to(card.boardId.toString()).emit('commentAdded', {cardId,comment});
+    io.to(card.boardId.toString()).emit('commentAdded', { cardId, comment, user: req.user });
     res.status(201).json(comment);
   } catch (err) {
     console.error('Add comment error:', err);
@@ -170,7 +186,7 @@ exports.uploadAttachment = async (req, res, next) => {
       });
 
       const io = req.app.get('io');
-      io.to(card.boardId.toString()).emit('attachmentAdded', { cardId, attachment });
+      io.to(card.boardId.toString()).emit('attachmentAdded', { cardId, attachment, user: req.user });
       res.json(attachment);
     } catch (err) {
       console.error('Upload attachment error:', err);
@@ -178,3 +194,23 @@ exports.uploadAttachment = async (req, res, next) => {
     }
   });
 };
+
+exports.getAttachments = async (req, res) => {
+  const cardId = parseInt(req.params.id);
+  try {
+    const card = await prisma.card.findUnique({ where: { id: cardId }, include: { board: true } });
+    if (!card) return res.status(404).json({ msg: 'Card not found' });
+
+    const canAccess = await canAccessBoard(req, card.boardId);
+    if (!canAccess) return res.status(403).json({ msg: 'Access denied' });
+
+    const attachments = await prisma.attachment.findMany({
+      where: { cardId },
+      orderBy: { id: 'asc' }
+    });
+    res.json(attachments);
+  } catch (err) {
+    console.error('Get attachments error:', err);
+    res.status(500).json({ msg: 'Internal server error' });
+  }
+}

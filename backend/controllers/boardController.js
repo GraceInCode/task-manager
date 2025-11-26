@@ -60,7 +60,11 @@ exports.redeemShareToken = async (req, res) => {
             data: { collaborators: { connect: { id: req.user.id } } },
         });
 
-        res.json({ msg: 'Joined board successfully', boardId });
+        const updatedBoard = await prisma.board.findUnique({
+            where: { id: boardId },
+            select: { id: true, title: true }
+        });
+        res.json(updatedBoard);
     } catch (err) {
         console.error('Redeem token error:', err);
         res.status(500).json({ msg: 'Internal server error' });

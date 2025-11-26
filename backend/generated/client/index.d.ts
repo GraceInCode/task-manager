@@ -3724,6 +3724,7 @@ export namespace Prisma {
     position: number | null
     listName: string | null
     boardId: number | null
+    updatedAt: Date | null
   }
 
   export type CardMaxAggregateOutputType = {
@@ -3735,6 +3736,7 @@ export namespace Prisma {
     position: number | null
     listName: string | null
     boardId: number | null
+    updatedAt: Date | null
   }
 
   export type CardCountAggregateOutputType = {
@@ -3746,6 +3748,7 @@ export namespace Prisma {
     position: number
     listName: number
     boardId: number
+    updatedAt: number
     _all: number
   }
 
@@ -3773,6 +3776,7 @@ export namespace Prisma {
     position?: true
     listName?: true
     boardId?: true
+    updatedAt?: true
   }
 
   export type CardMaxAggregateInputType = {
@@ -3784,6 +3788,7 @@ export namespace Prisma {
     position?: true
     listName?: true
     boardId?: true
+    updatedAt?: true
   }
 
   export type CardCountAggregateInputType = {
@@ -3795,6 +3800,7 @@ export namespace Prisma {
     position?: true
     listName?: true
     boardId?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -3893,6 +3899,7 @@ export namespace Prisma {
     position: number
     listName: string
     boardId: number
+    updatedAt: Date
     _count: CardCountAggregateOutputType | null
     _avg: CardAvgAggregateOutputType | null
     _sum: CardSumAggregateOutputType | null
@@ -3923,6 +3930,7 @@ export namespace Prisma {
     position?: boolean
     listName?: boolean
     boardId?: boolean
+    updatedAt?: boolean
     board?: boolean | BoardDefaultArgs<ExtArgs>
     assignee?: boolean | Card$assigneeArgs<ExtArgs>
     comments?: boolean | Card$commentsArgs<ExtArgs>
@@ -3939,6 +3947,7 @@ export namespace Prisma {
     position?: boolean
     listName?: boolean
     boardId?: boolean
+    updatedAt?: boolean
     board?: boolean | BoardDefaultArgs<ExtArgs>
     assignee?: boolean | Card$assigneeArgs<ExtArgs>
   }, ExtArgs["result"]["card"]>
@@ -3952,6 +3961,7 @@ export namespace Prisma {
     position?: boolean
     listName?: boolean
     boardId?: boolean
+    updatedAt?: boolean
     board?: boolean | BoardDefaultArgs<ExtArgs>
     assignee?: boolean | Card$assigneeArgs<ExtArgs>
   }, ExtArgs["result"]["card"]>
@@ -3965,9 +3975,10 @@ export namespace Prisma {
     position?: boolean
     listName?: boolean
     boardId?: boolean
+    updatedAt?: boolean
   }
 
-  export type CardOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "assigneeId" | "dueDate" | "position" | "listName" | "boardId", ExtArgs["result"]["card"]>
+  export type CardOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "assigneeId" | "dueDate" | "position" | "listName" | "boardId" | "updatedAt", ExtArgs["result"]["card"]>
   export type CardInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     board?: boolean | BoardDefaultArgs<ExtArgs>
     assignee?: boolean | Card$assigneeArgs<ExtArgs>
@@ -4001,6 +4012,7 @@ export namespace Prisma {
       position: number
       listName: string
       boardId: number
+      updatedAt: Date
     }, ExtArgs["result"]["card"]>
     composites: {}
   }
@@ -4436,6 +4448,7 @@ export namespace Prisma {
     readonly position: FieldRef<"Card", 'Int'>
     readonly listName: FieldRef<"Card", 'String'>
     readonly boardId: FieldRef<"Card", 'Int'>
+    readonly updatedAt: FieldRef<"Card", 'DateTime'>
   }
     
 
@@ -4947,6 +4960,7 @@ export namespace Prisma {
     userId: number | null
     cardId: number | null
     timestamp: Date | null
+    updatedAt: Date | null
   }
 
   export type CommentMaxAggregateOutputType = {
@@ -4955,6 +4969,7 @@ export namespace Prisma {
     userId: number | null
     cardId: number | null
     timestamp: Date | null
+    updatedAt: Date | null
   }
 
   export type CommentCountAggregateOutputType = {
@@ -4963,6 +4978,7 @@ export namespace Prisma {
     userId: number
     cardId: number
     timestamp: number
+    updatedAt: number
     _all: number
   }
 
@@ -4985,6 +5001,7 @@ export namespace Prisma {
     userId?: true
     cardId?: true
     timestamp?: true
+    updatedAt?: true
   }
 
   export type CommentMaxAggregateInputType = {
@@ -4993,6 +5010,7 @@ export namespace Prisma {
     userId?: true
     cardId?: true
     timestamp?: true
+    updatedAt?: true
   }
 
   export type CommentCountAggregateInputType = {
@@ -5001,6 +5019,7 @@ export namespace Prisma {
     userId?: true
     cardId?: true
     timestamp?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -5096,6 +5115,7 @@ export namespace Prisma {
     userId: number
     cardId: number
     timestamp: Date
+    updatedAt: Date
     _count: CommentCountAggregateOutputType | null
     _avg: CommentAvgAggregateOutputType | null
     _sum: CommentSumAggregateOutputType | null
@@ -5123,6 +5143,7 @@ export namespace Prisma {
     userId?: boolean
     cardId?: boolean
     timestamp?: boolean
+    updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     card?: boolean | CardDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
@@ -5133,6 +5154,7 @@ export namespace Prisma {
     userId?: boolean
     cardId?: boolean
     timestamp?: boolean
+    updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     card?: boolean | CardDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
@@ -5143,6 +5165,7 @@ export namespace Prisma {
     userId?: boolean
     cardId?: boolean
     timestamp?: boolean
+    updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     card?: boolean | CardDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
@@ -5153,9 +5176,10 @@ export namespace Prisma {
     userId?: boolean
     cardId?: boolean
     timestamp?: boolean
+    updatedAt?: boolean
   }
 
-  export type CommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "userId" | "cardId" | "timestamp", ExtArgs["result"]["comment"]>
+  export type CommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "userId" | "cardId" | "timestamp" | "updatedAt", ExtArgs["result"]["comment"]>
   export type CommentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     card?: boolean | CardDefaultArgs<ExtArgs>
@@ -5181,6 +5205,7 @@ export namespace Prisma {
       userId: number
       cardId: number
       timestamp: Date
+      updatedAt: Date
     }, ExtArgs["result"]["comment"]>
     composites: {}
   }
@@ -5611,6 +5636,7 @@ export namespace Prisma {
     readonly userId: FieldRef<"Comment", 'Int'>
     readonly cardId: FieldRef<"Comment", 'Int'>
     readonly timestamp: FieldRef<"Comment", 'DateTime'>
+    readonly updatedAt: FieldRef<"Comment", 'DateTime'>
   }
     
 
@@ -7173,7 +7199,8 @@ export namespace Prisma {
     dueDate: 'dueDate',
     position: 'position',
     listName: 'listName',
-    boardId: 'boardId'
+    boardId: 'boardId',
+    updatedAt: 'updatedAt'
   };
 
   export type CardScalarFieldEnum = (typeof CardScalarFieldEnum)[keyof typeof CardScalarFieldEnum]
@@ -7184,7 +7211,8 @@ export namespace Prisma {
     text: 'text',
     userId: 'userId',
     cardId: 'cardId',
-    timestamp: 'timestamp'
+    timestamp: 'timestamp',
+    updatedAt: 'updatedAt'
   };
 
   export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
@@ -7413,6 +7441,7 @@ export namespace Prisma {
     position?: IntFilter<"Card"> | number
     listName?: StringFilter<"Card"> | string
     boardId?: IntFilter<"Card"> | number
+    updatedAt?: DateTimeFilter<"Card"> | Date | string
     board?: XOR<BoardScalarRelationFilter, BoardWhereInput>
     assignee?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     comments?: CommentListRelationFilter
@@ -7428,6 +7457,7 @@ export namespace Prisma {
     position?: SortOrder
     listName?: SortOrder
     boardId?: SortOrder
+    updatedAt?: SortOrder
     board?: BoardOrderByWithRelationInput
     assignee?: UserOrderByWithRelationInput
     comments?: CommentOrderByRelationAggregateInput
@@ -7446,6 +7476,7 @@ export namespace Prisma {
     position?: IntFilter<"Card"> | number
     listName?: StringFilter<"Card"> | string
     boardId?: IntFilter<"Card"> | number
+    updatedAt?: DateTimeFilter<"Card"> | Date | string
     board?: XOR<BoardScalarRelationFilter, BoardWhereInput>
     assignee?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     comments?: CommentListRelationFilter
@@ -7461,6 +7492,7 @@ export namespace Prisma {
     position?: SortOrder
     listName?: SortOrder
     boardId?: SortOrder
+    updatedAt?: SortOrder
     _count?: CardCountOrderByAggregateInput
     _avg?: CardAvgOrderByAggregateInput
     _max?: CardMaxOrderByAggregateInput
@@ -7480,6 +7512,7 @@ export namespace Prisma {
     position?: IntWithAggregatesFilter<"Card"> | number
     listName?: StringWithAggregatesFilter<"Card"> | string
     boardId?: IntWithAggregatesFilter<"Card"> | number
+    updatedAt?: DateTimeWithAggregatesFilter<"Card"> | Date | string
   }
 
   export type CommentWhereInput = {
@@ -7491,6 +7524,7 @@ export namespace Prisma {
     userId?: IntFilter<"Comment"> | number
     cardId?: IntFilter<"Comment"> | number
     timestamp?: DateTimeFilter<"Comment"> | Date | string
+    updatedAt?: DateTimeFilter<"Comment"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     card?: XOR<CardScalarRelationFilter, CardWhereInput>
   }
@@ -7501,6 +7535,7 @@ export namespace Prisma {
     userId?: SortOrder
     cardId?: SortOrder
     timestamp?: SortOrder
+    updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
     card?: CardOrderByWithRelationInput
   }
@@ -7514,6 +7549,7 @@ export namespace Prisma {
     userId?: IntFilter<"Comment"> | number
     cardId?: IntFilter<"Comment"> | number
     timestamp?: DateTimeFilter<"Comment"> | Date | string
+    updatedAt?: DateTimeFilter<"Comment"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     card?: XOR<CardScalarRelationFilter, CardWhereInput>
   }, "id">
@@ -7524,6 +7560,7 @@ export namespace Prisma {
     userId?: SortOrder
     cardId?: SortOrder
     timestamp?: SortOrder
+    updatedAt?: SortOrder
     _count?: CommentCountOrderByAggregateInput
     _avg?: CommentAvgOrderByAggregateInput
     _max?: CommentMaxOrderByAggregateInput
@@ -7540,6 +7577,7 @@ export namespace Prisma {
     userId?: IntWithAggregatesFilter<"Comment"> | number
     cardId?: IntWithAggregatesFilter<"Comment"> | number
     timestamp?: DateTimeWithAggregatesFilter<"Comment"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Comment"> | Date | string
   }
 
   export type AttachmentWhereInput = {
@@ -7713,6 +7751,7 @@ export namespace Prisma {
     dueDate?: Date | string | null
     position: number
     listName: string
+    updatedAt?: Date | string
     board: BoardCreateNestedOneWithoutCardsInput
     assignee?: UserCreateNestedOneWithoutAssignedCardsInput
     comments?: CommentCreateNestedManyWithoutCardInput
@@ -7728,6 +7767,7 @@ export namespace Prisma {
     position: number
     listName: string
     boardId: number
+    updatedAt?: Date | string
     comments?: CommentUncheckedCreateNestedManyWithoutCardInput
     attachments?: AttachmentUncheckedCreateNestedManyWithoutCardInput
   }
@@ -7738,6 +7778,7 @@ export namespace Prisma {
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     position?: IntFieldUpdateOperationsInput | number
     listName?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     board?: BoardUpdateOneRequiredWithoutCardsNestedInput
     assignee?: UserUpdateOneWithoutAssignedCardsNestedInput
     comments?: CommentUpdateManyWithoutCardNestedInput
@@ -7753,6 +7794,7 @@ export namespace Prisma {
     position?: IntFieldUpdateOperationsInput | number
     listName?: StringFieldUpdateOperationsInput | string
     boardId?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     comments?: CommentUncheckedUpdateManyWithoutCardNestedInput
     attachments?: AttachmentUncheckedUpdateManyWithoutCardNestedInput
   }
@@ -7766,6 +7808,7 @@ export namespace Prisma {
     position: number
     listName: string
     boardId: number
+    updatedAt?: Date | string
   }
 
   export type CardUpdateManyMutationInput = {
@@ -7774,6 +7817,7 @@ export namespace Prisma {
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     position?: IntFieldUpdateOperationsInput | number
     listName?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CardUncheckedUpdateManyInput = {
@@ -7785,11 +7829,13 @@ export namespace Prisma {
     position?: IntFieldUpdateOperationsInput | number
     listName?: StringFieldUpdateOperationsInput | string
     boardId?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CommentCreateInput = {
     text: string
     timestamp?: Date | string
+    updatedAt?: Date | string
     user: UserCreateNestedOneWithoutCommentsInput
     card: CardCreateNestedOneWithoutCommentsInput
   }
@@ -7800,11 +7846,13 @@ export namespace Prisma {
     userId: number
     cardId: number
     timestamp?: Date | string
+    updatedAt?: Date | string
   }
 
   export type CommentUpdateInput = {
     text?: StringFieldUpdateOperationsInput | string
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCommentsNestedInput
     card?: CardUpdateOneRequiredWithoutCommentsNestedInput
   }
@@ -7815,6 +7863,7 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     cardId?: IntFieldUpdateOperationsInput | number
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CommentCreateManyInput = {
@@ -7823,11 +7872,13 @@ export namespace Prisma {
     userId: number
     cardId: number
     timestamp?: Date | string
+    updatedAt?: Date | string
   }
 
   export type CommentUpdateManyMutationInput = {
     text?: StringFieldUpdateOperationsInput | string
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CommentUncheckedUpdateManyInput = {
@@ -7836,6 +7887,7 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     cardId?: IntFieldUpdateOperationsInput | number
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AttachmentCreateInput = {
@@ -8095,6 +8147,17 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
   export type BoardScalarRelationFilter = {
     is?: BoardWhereInput
     isNot?: BoardWhereInput
@@ -8119,6 +8182,7 @@ export namespace Prisma {
     position?: SortOrder
     listName?: SortOrder
     boardId?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type CardAvgOrderByAggregateInput = {
@@ -8137,6 +8201,7 @@ export namespace Prisma {
     position?: SortOrder
     listName?: SortOrder
     boardId?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type CardMinOrderByAggregateInput = {
@@ -8148,6 +8213,7 @@ export namespace Prisma {
     position?: SortOrder
     listName?: SortOrder
     boardId?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type CardSumOrderByAggregateInput = {
@@ -8205,7 +8271,7 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type DateTimeFilter<$PrismaModel = never> = {
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
     notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -8213,7 +8279,10 @@ export namespace Prisma {
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type CardScalarRelationFilter = {
@@ -8227,6 +8296,7 @@ export namespace Prisma {
     userId?: SortOrder
     cardId?: SortOrder
     timestamp?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type CommentAvgOrderByAggregateInput = {
@@ -8241,6 +8311,7 @@ export namespace Prisma {
     userId?: SortOrder
     cardId?: SortOrder
     timestamp?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type CommentMinOrderByAggregateInput = {
@@ -8249,26 +8320,13 @@ export namespace Prisma {
     userId?: SortOrder
     cardId?: SortOrder
     timestamp?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type CommentSumOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
     cardId?: SortOrder
-  }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type AttachmentCountOrderByAggregateInput = {
@@ -8667,6 +8725,10 @@ export namespace Prisma {
     set?: Date | string | null
   }
 
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
   export type BoardUpdateOneRequiredWithoutCardsNestedInput = {
     create?: XOR<BoardCreateWithoutCardsInput, BoardUncheckedCreateWithoutCardsInput>
     connectOrCreate?: BoardCreateOrConnectWithoutCardsInput
@@ -8759,10 +8821,6 @@ export namespace Prisma {
     create?: XOR<CardCreateWithoutCommentsInput, CardUncheckedCreateWithoutCommentsInput>
     connectOrCreate?: CardCreateOrConnectWithoutCommentsInput
     connect?: CardWhereUniqueInput
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
   }
 
   export type UserUpdateOneRequiredWithoutCommentsNestedInput = {
@@ -8914,6 +8972,17 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -8972,17 +9041,6 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -9026,6 +9084,7 @@ export namespace Prisma {
     dueDate?: Date | string | null
     position: number
     listName: string
+    updatedAt?: Date | string
     board: BoardCreateNestedOneWithoutCardsInput
     comments?: CommentCreateNestedManyWithoutCardInput
     attachments?: AttachmentCreateNestedManyWithoutCardInput
@@ -9039,6 +9098,7 @@ export namespace Prisma {
     position: number
     listName: string
     boardId: number
+    updatedAt?: Date | string
     comments?: CommentUncheckedCreateNestedManyWithoutCardInput
     attachments?: AttachmentUncheckedCreateNestedManyWithoutCardInput
   }
@@ -9056,6 +9116,7 @@ export namespace Prisma {
   export type CommentCreateWithoutUserInput = {
     text: string
     timestamp?: Date | string
+    updatedAt?: Date | string
     card: CardCreateNestedOneWithoutCommentsInput
   }
 
@@ -9064,6 +9125,7 @@ export namespace Prisma {
     text: string
     cardId: number
     timestamp?: Date | string
+    updatedAt?: Date | string
   }
 
   export type CommentCreateOrConnectWithoutUserInput = {
@@ -9170,6 +9232,7 @@ export namespace Prisma {
     position?: IntFilter<"Card"> | number
     listName?: StringFilter<"Card"> | string
     boardId?: IntFilter<"Card"> | number
+    updatedAt?: DateTimeFilter<"Card"> | Date | string
   }
 
   export type CommentUpsertWithWhereUniqueWithoutUserInput = {
@@ -9197,6 +9260,7 @@ export namespace Prisma {
     userId?: IntFilter<"Comment"> | number
     cardId?: IntFilter<"Comment"> | number
     timestamp?: DateTimeFilter<"Comment"> | Date | string
+    updatedAt?: DateTimeFilter<"Comment"> | Date | string
   }
 
   export type AttachmentUpsertWithWhereUniqueWithoutUserInput = {
@@ -9296,6 +9360,7 @@ export namespace Prisma {
     dueDate?: Date | string | null
     position: number
     listName: string
+    updatedAt?: Date | string
     assignee?: UserCreateNestedOneWithoutAssignedCardsInput
     comments?: CommentCreateNestedManyWithoutCardInput
     attachments?: AttachmentCreateNestedManyWithoutCardInput
@@ -9309,6 +9374,7 @@ export namespace Prisma {
     dueDate?: Date | string | null
     position: number
     listName: string
+    updatedAt?: Date | string
     comments?: CommentUncheckedCreateNestedManyWithoutCardInput
     attachments?: AttachmentUncheckedCreateNestedManyWithoutCardInput
   }
@@ -9439,6 +9505,7 @@ export namespace Prisma {
   export type CommentCreateWithoutCardInput = {
     text: string
     timestamp?: Date | string
+    updatedAt?: Date | string
     user: UserCreateNestedOneWithoutCommentsInput
   }
 
@@ -9447,6 +9514,7 @@ export namespace Prisma {
     text: string
     userId: number
     timestamp?: Date | string
+    updatedAt?: Date | string
   }
 
   export type CommentCreateOrConnectWithoutCardInput = {
@@ -9598,6 +9666,7 @@ export namespace Prisma {
     dueDate?: Date | string | null
     position: number
     listName: string
+    updatedAt?: Date | string
     board: BoardCreateNestedOneWithoutCardsInput
     assignee?: UserCreateNestedOneWithoutAssignedCardsInput
     attachments?: AttachmentCreateNestedManyWithoutCardInput
@@ -9612,6 +9681,7 @@ export namespace Prisma {
     position: number
     listName: string
     boardId: number
+    updatedAt?: Date | string
     attachments?: AttachmentUncheckedCreateNestedManyWithoutCardInput
   }
 
@@ -9667,6 +9737,7 @@ export namespace Prisma {
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     position?: IntFieldUpdateOperationsInput | number
     listName?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     board?: BoardUpdateOneRequiredWithoutCardsNestedInput
     assignee?: UserUpdateOneWithoutAssignedCardsNestedInput
     attachments?: AttachmentUpdateManyWithoutCardNestedInput
@@ -9681,6 +9752,7 @@ export namespace Prisma {
     position?: IntFieldUpdateOperationsInput | number
     listName?: StringFieldUpdateOperationsInput | string
     boardId?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     attachments?: AttachmentUncheckedUpdateManyWithoutCardNestedInput
   }
 
@@ -9714,6 +9786,7 @@ export namespace Prisma {
     dueDate?: Date | string | null
     position: number
     listName: string
+    updatedAt?: Date | string
     board: BoardCreateNestedOneWithoutCardsInput
     assignee?: UserCreateNestedOneWithoutAssignedCardsInput
     comments?: CommentCreateNestedManyWithoutCardInput
@@ -9728,6 +9801,7 @@ export namespace Prisma {
     position: number
     listName: string
     boardId: number
+    updatedAt?: Date | string
     comments?: CommentUncheckedCreateNestedManyWithoutCardInput
   }
 
@@ -9783,6 +9857,7 @@ export namespace Prisma {
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     position?: IntFieldUpdateOperationsInput | number
     listName?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     board?: BoardUpdateOneRequiredWithoutCardsNestedInput
     assignee?: UserUpdateOneWithoutAssignedCardsNestedInput
     comments?: CommentUpdateManyWithoutCardNestedInput
@@ -9797,6 +9872,7 @@ export namespace Prisma {
     position?: IntFieldUpdateOperationsInput | number
     listName?: StringFieldUpdateOperationsInput | string
     boardId?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     comments?: CommentUncheckedUpdateManyWithoutCardNestedInput
   }
 
@@ -9813,6 +9889,7 @@ export namespace Prisma {
     position: number
     listName: string
     boardId: number
+    updatedAt?: Date | string
   }
 
   export type CommentCreateManyUserInput = {
@@ -9820,6 +9897,7 @@ export namespace Prisma {
     text: string
     cardId: number
     timestamp?: Date | string
+    updatedAt?: Date | string
   }
 
   export type AttachmentCreateManyUserInput = {
@@ -9853,6 +9931,7 @@ export namespace Prisma {
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     position?: IntFieldUpdateOperationsInput | number
     listName?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     board?: BoardUpdateOneRequiredWithoutCardsNestedInput
     comments?: CommentUpdateManyWithoutCardNestedInput
     attachments?: AttachmentUpdateManyWithoutCardNestedInput
@@ -9866,6 +9945,7 @@ export namespace Prisma {
     position?: IntFieldUpdateOperationsInput | number
     listName?: StringFieldUpdateOperationsInput | string
     boardId?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     comments?: CommentUncheckedUpdateManyWithoutCardNestedInput
     attachments?: AttachmentUncheckedUpdateManyWithoutCardNestedInput
   }
@@ -9878,11 +9958,13 @@ export namespace Prisma {
     position?: IntFieldUpdateOperationsInput | number
     listName?: StringFieldUpdateOperationsInput | string
     boardId?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CommentUpdateWithoutUserInput = {
     text?: StringFieldUpdateOperationsInput | string
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     card?: CardUpdateOneRequiredWithoutCommentsNestedInput
   }
 
@@ -9891,6 +9973,7 @@ export namespace Prisma {
     text?: StringFieldUpdateOperationsInput | string
     cardId?: IntFieldUpdateOperationsInput | number
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CommentUncheckedUpdateManyWithoutUserInput = {
@@ -9898,6 +9981,7 @@ export namespace Prisma {
     text?: StringFieldUpdateOperationsInput | string
     cardId?: IntFieldUpdateOperationsInput | number
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AttachmentUpdateWithoutUserInput = {
@@ -9947,6 +10031,7 @@ export namespace Prisma {
     dueDate?: Date | string | null
     position: number
     listName: string
+    updatedAt?: Date | string
   }
 
   export type UserUpdateWithoutCollaboratedBoardsInput = {
@@ -9980,6 +10065,7 @@ export namespace Prisma {
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     position?: IntFieldUpdateOperationsInput | number
     listName?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignee?: UserUpdateOneWithoutAssignedCardsNestedInput
     comments?: CommentUpdateManyWithoutCardNestedInput
     attachments?: AttachmentUpdateManyWithoutCardNestedInput
@@ -9993,6 +10079,7 @@ export namespace Prisma {
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     position?: IntFieldUpdateOperationsInput | number
     listName?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     comments?: CommentUncheckedUpdateManyWithoutCardNestedInput
     attachments?: AttachmentUncheckedUpdateManyWithoutCardNestedInput
   }
@@ -10005,6 +10092,7 @@ export namespace Prisma {
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     position?: IntFieldUpdateOperationsInput | number
     listName?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CommentCreateManyCardInput = {
@@ -10012,6 +10100,7 @@ export namespace Prisma {
     text: string
     userId: number
     timestamp?: Date | string
+    updatedAt?: Date | string
   }
 
   export type AttachmentCreateManyCardInput = {
@@ -10024,6 +10113,7 @@ export namespace Prisma {
   export type CommentUpdateWithoutCardInput = {
     text?: StringFieldUpdateOperationsInput | string
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCommentsNestedInput
   }
 
@@ -10032,6 +10122,7 @@ export namespace Prisma {
     text?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CommentUncheckedUpdateManyWithoutCardInput = {
@@ -10039,6 +10130,7 @@ export namespace Prisma {
     text?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AttachmentUpdateWithoutCardInput = {
