@@ -29,6 +29,8 @@ const cardRoutes = require('./routes/cardRoutes');
 // Make io available to controllers
 app.set('io', io);
 
+app.get('/health', (req, res) => res.json({ status: 'ok' }));
+
 app.use('/api/auth', authRoutes);
 app.use('/api/boards', boardRoutes);
 app.use('/api/cards', cardRoutes);
