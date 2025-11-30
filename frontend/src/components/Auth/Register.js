@@ -20,7 +20,8 @@ const Register = () => {
             navigate('/dashboard');
         } catch (err) {
             console.error(err);
-            alert('Registration failed. Please try again.');
+            const errorMsg = err.response?.data?.error || err.response?.data?.msg || 'Registration failed. Please try again.';
+            alert(errorMsg);
         } finally {
             setIsLoading(false);
         }
