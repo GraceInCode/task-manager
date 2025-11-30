@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test jest --forceExit"
   },
   "keywords": [],
   "author": "",
@@ -26,7 +26,9 @@
   },
   "devDependencies": {
     "dotenv-cli": "^11.0.0",
+    "jest": "^30.2.0",
     "prisma": "^6.19.0",
+    "supertest": "^7.1.4",
     "ts-node-dev": "^2.0.0"
   }
 }

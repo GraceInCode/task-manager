@@ -56,4 +56,8 @@ io.use((socket, next) => {
 const setupSockets = require('./sockets/index');
 setupSockets(io);
 
-server.listen(process.env.PORT || 5000, () => console.log('Server on port 5000'));
+if (process.env.NODE_ENV !== 'test') {
+  server.listen(process.env.PORT || 5000, () => console.log('Server on port 5000'));
+}
+
+module.exports = app;
