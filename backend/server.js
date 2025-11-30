@@ -4,7 +4,7 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const io = require('socket.io')(server, { cors: {
-   origin: 'http://localhost:3000',
+   origin: ['http://localhost:3000', 'https://studio-boards.vercel.app'],
    methods: ['GET', 'POST'],
    transports: ['websocket', 'polling']
    } 
@@ -16,9 +16,10 @@ const jwt = require('jsonwebtoken');
 
 app.use(express.json());
 app.use(require('cors')({
-  origin: 'http://localhost:3000',
+  origin: ['http://localhost:3000', 'https://studio-boards.vercel.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 const authRoutes = require('./routes/authRoutes');
