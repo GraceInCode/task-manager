@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 
 const ItemType = 'CARD';
 
-const socket = io('http://localhost:5000', { 
+const socket = io(process.env.REACT_APP_SOCKET_URL || 'https://task-manager-yjcd.onrender.com', { 
   auth: { token: localStorage.getItem('token') },
   transports: ['websocket', 'polling'],
 });
