@@ -13,7 +13,8 @@ exports.register = async (req, res) => {
 
         const hashed = await bcrypt.hash(password, 10);
         const user = await prisma.user.create({ data: { email, password: hashed } });
-        res.status(201).json({ msg: 'User registered successfully', userId: user.id });
+        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        res.status(201).json({ token });
     } catch (error) {
         console.error('Registration error:', error);
         res.status(500).json({ msg: 'Internal server error' });

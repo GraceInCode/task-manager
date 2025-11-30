@@ -164,17 +164,17 @@ exports.deleteBoard = async (req, res) => {
   const boardId = req.params.id;
 
   try {
+    const board = await prisma.board.findUnique({ where: { id: parseInt(boardId) } });
+    if (!board) {
+      return res.status(404).json({ msg: 'Board not found' });
+    }
     if (board.ownerId !== req.user.id) {
       return res.status(403).json({ msg: 'Only the owner can delete the board' });
     }
-    const canAccess = await canAccessBoard(req, boardId);
-    if (!canAccess) {
-      return res.status(403).json({ msg: 'Access denied' });
-    }
-    const board = await prisma.board.delete({
+    await prisma.board.delete({
       where: { id: parseInt(boardId) },
     });
-    res.json(board);
+    res.json({ msg: 'Board deleted' });
   } catch (err) {
     console.error('Delete board error:', err);
     res.status(500).json({ msg: 'Internal server error' });
