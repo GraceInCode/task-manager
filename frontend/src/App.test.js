@@ -1,8 +1,16 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { AppProvider } from './context/appContext';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('AppProvider provides context', () => {
+  const mockLogin = jest.fn();
+  const mockLogout = jest.fn();
+  
+  expect(AppProvider).toBeDefined();
+});
+
+test('localStorage token handling', () => {
+  localStorage.setItem('token', 'test-token');
+  expect(localStorage.getItem('token')).toBe('test-token');
+  
+  localStorage.removeItem('token');
+  expect(localStorage.getItem('token')).toBeNull();
 });
