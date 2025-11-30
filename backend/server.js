@@ -60,7 +60,14 @@ const setupSockets = require('./sockets/index');
 setupSockets(io);
 
 if (process.env.NODE_ENV !== 'test') {
-  server.listen(process.env.PORT || 5000, () => console.log('Server on port 5000'));
+  server.listen(process.env.PORT || 5000, () => {
+    console.log('Server on port 5000');
+    console.log('Environment check:', {
+      hasDatabase: !!process.env.DATABASE_URL,
+      hasJWT: !!process.env.JWT_SECRET,
+      nodeEnv: process.env.NODE_ENV
+    });
+  });
 }
 
 module.exports = app;
