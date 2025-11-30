@@ -39,10 +39,12 @@ const Join = () => {
   }, [shareToken, token, navigate]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-      <div className="flex items-center space-x-3">
-        <div className="w-8 h-8 border-4 border-primary-500 border-t-transparent rounded-full animate-spin"></div>
-        <span className="text-gray-600 font-medium">Joining board...</span>
+    <div className="min-h-screen bg-cream cursor-ink flex items-center justify-center">
+      <div className="flex items-center space-x-4">
+        <div className="w-12 h-12 bg-charcoal transform rotate-45 flex items-center justify-center">
+          <div className="w-6 h-6 border-2 border-terracotta border-t-transparent animate-spin transform -rotate-45"></div>
+        </div>
+        <span className="font-mono text-rust text-lg tracking-wide">// joining.board()</span>
       </div>
     </div>
   );

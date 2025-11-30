@@ -1,0 +1,19 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  backend-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with: node-version: 18
+      - run: cd backend && npm ci
+      - run: cd backend && npm test
+  frontend-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with: node-version: 18
+      - run: cd frontend && npm ci
+      - run: cd frontend && npm test

@@ -26,71 +26,78 @@ const Register = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-accent-50 to-accent-100 flex items-center justify-center p-4">
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-large p-8 w-full max-w-md border border-white/20">
-                <div className="text-center mb-8">
-                    <div className="w-16 h-16 bg-gradient-to-br from-accent-500 to-accent-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <span className="text-white font-bold text-2xl">T</span>
+        <div className="min-h-screen bg-cream cursor-ink flex items-center justify-center p-8">
+            <div className="w-full max-w-lg">
+                <div className="mb-12 transform -rotate-1">
+                    <div className="flex items-end space-x-4 mb-6">
+                        <div className="w-16 h-16 bg-charcoal transform rotate-12 flex items-center justify-center">
+                            <span className="text-terracotta font-display font-bold text-2xl transform -rotate-12">T</span>
+                        </div>
+                        <div>
+                            <h1 className="font-display text-5xl font-bold text-charcoal leading-none mb-2">Create account</h1>
+                            <p className="font-mono text-rust text-sm tracking-wide">// register.newUser()</p>
+                        </div>
                     </div>
-                    <h1 className="text-2xl font-bold text-gray-900 mb-2">Create account</h1>
-                    <p className="text-gray-600">Get started with your new account</p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Email address
-                        </label>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Enter your email"
-                            required
-                            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500 transition-all duration-200 placeholder-gray-400"
-                        />
-                    </div>
+                <div className="bg-sand border-l-8 border-l-rust p-8 shadow-paper transform rotate-1">
+                    <form onSubmit={handleSubmit} className="space-y-8">
+                        <div>
+                            <label className="block font-mono text-sm font-medium text-charcoal mb-3 tracking-wide">
+                                email_address
+                            </label>
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="your.email@example.com"
+                                required
+                                className="w-full px-6 py-4 bg-cream border-2 border-clay focus:border-terracotta focus:outline-none font-sans text-charcoal placeholder-fog transform focus:rotate-0 transition-all duration-200"
+                            />
+                        </div>
 
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Password
-                        </label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Create a password"
-                            required
-                            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500 transition-all duration-200 placeholder-gray-400"
-                        />
-                    </div>
+                        <div>
+                            <label className="block font-mono text-sm font-medium text-charcoal mb-3 tracking-wide">
+                                password
+                            </label>
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="••••••••••••"
+                                required
+                                className="w-full px-6 py-4 bg-cream border-2 border-clay focus:border-terracotta focus:outline-none font-mono text-charcoal placeholder-fog transform focus:rotate-0 transition-all duration-200"
+                            />
+                        </div>
 
-                    <button
-                        type="submit"
-                        disabled={isLoading}
-                        className="w-full py-3 px-4 bg-accent-500 hover:bg-accent-600 disabled:bg-accent-300 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-soft hover:shadow-medium"
-                    >
-                        {isLoading ? (
-                            <div className="flex items-center justify-center space-x-2">
-                                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                                <span>Creating account...</span>
-                            </div>
-                        ) : (
-                            'Create account'
-                        )}
-                    </button>
-                </form>
-
-                <div className="mt-6 text-center">
-                    <p className="text-gray-600">
-                        Already have an account?{' '}
-                        <Link
-                            to="/login"
-                            className="text-accent-600 hover:text-accent-700 font-medium transition-colors duration-200"
+                        <button
+                            type="submit"
+                            disabled={isLoading}
+                            className="w-full py-4 px-6 bg-rust hover:bg-terracotta disabled:bg-fog disabled:cursor-not-allowed text-cream font-sans font-bold shadow-brutal hover:shadow-ink-drop transition-all duration-200 transform hover:-translate-y-1 hover:rotate-1 disabled:transform-none"
                         >
-                            Sign in
-                        </Link>
-                    </p>
+                            {isLoading ? (
+                                <div className="flex items-center justify-center space-x-3">
+                                    <div className="w-5 h-5 border-2 border-cream border-t-transparent animate-spin"></div>
+                                    <span className="font-mono">creating account...</span>
+                                </div>
+                            ) : (
+                                <span className="font-mono">register()</span>
+                            )}
+                        </button>
+                    </form>
+
+                    <div className="mt-8 pt-6 border-t-2 border-dashed border-clay">
+                        <p className="font-mono text-charcoal text-sm">
+                            <span className="text-fog">// </span>
+                            already registered?{' '}
+                            <Link
+                                to="/login"
+                                className="text-rust hover:text-terracotta font-semibold underline decoration-2 underline-offset-4 hover:decoration-terracotta transition-colors duration-200"
+                            >
+                                login()
+                            </Link>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
