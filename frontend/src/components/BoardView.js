@@ -94,6 +94,8 @@ const BoardView = () => {
   const [showAddCardModal, setShowAddCardModal] = useState(false);
   const [newCardTitle, setNewCardTitle] = useState('');
   const [selectedList, setSelectedList] = useState('');
+  const [showShareLinkModal, setShowShareLinkModal] = useState(false);
+  const [shareLink, setShareLink] = useState('');
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
@@ -192,10 +194,10 @@ const BoardView = () => {
   const handleShare = async () => {
     try {
       const res = await api.post(`/boards/${id}/share`);
-      const shareLink = `${window.location.origin}/join?token=${res.data.shareToken}`;
-      await navigator.clipboard.writeText(shareLink);
-      toast.success('Share link copied to clipboard!');
-      toast.info(shareLink, { autoClose: 8000 });
+      const link = `${window.location.origin}/join?token=${res.data.shareToken}`;
+      await navigator.clipboard.writeText(link);
+      setShareLink(link);
+      setShowShareLinkModal(true);
     } catch (err) {
       console.error('Share error:', err);
       toast.error('Failed to generate share link');
@@ -296,6 +298,25 @@ const BoardView = () => {
                   cancel()
                 </button>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Share Link Modal */}
+        {showShareLinkModal && (
+          <div className="fixed inset-0 bg-charcoal bg-opacity-80 flex items-center justify-center z-50 cursor-ink" onClick={() => setShowShareLinkModal(false)}>
+            <div className="bg-sage border-4 border-moss p-8 max-w-lg w-full mx-4 shadow-brutal transform -rotate-1" onClick={(e) => e.stopPropagation()}>
+              <h2 className="font-display text-2xl font-bold text-cream mb-4">Share Link Copied!</h2>
+              <p className="font-mono text-sm text-cream mb-6">// link copied to clipboard</p>
+              <div className="bg-cream p-4 border-2 border-moss mb-6 break-all font-mono text-xs text-charcoal">
+                {shareLink}
+              </div>
+              <button
+                onClick={() => setShowShareLinkModal(false)}
+                className="w-full px-6 py-3 bg-charcoal hover:bg-ink text-cream font-mono text-sm transition-colors duration-200"
+              >
+                close()
+              </button>
             </div>
           </div>
         )}
