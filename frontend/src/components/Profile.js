@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
-import { toast } from 'react-toastify';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,11 +21,9 @@ const Profile = () => {
       } catch (err) {
         if (isMounted) {
           console.error('Fetch profile error:', err);
-          if (err.response?.status === 404) {
-            toast.error('Profile endpoint not available. Please deploy the latest backend code.');
-          } else {
-            toast.error('Failed to load profile');
-          }
+          alert(err.response?.status === 404 
+            ? 'Profile endpoint not available. Please deploy the latest backend code.'
+            : 'Failed to load profile');
         }
       }
     };
@@ -35,19 +33,16 @@ const Profile = () => {
 
   const handleUpdateUsername = async (e) => {
     e.preventDefault();
-    if (!username.trim()) {
-      toast.error('Username cannot be empty');
-      return;
-    }
+    if (!username.trim()) return;
     setIsLoading(true);
     try {
       const res = await api.put('/auth/username', { username });
       setUser(res.data);
-      toast.success('Username updated successfully!');
+      setShowSuccessModal(true);
     } catch (err) {
       console.error('Update username error:', err);
       const errorMsg = err.response?.data?.msg || 'Failed to update username';
-      toast.error(errorMsg);
+      alert(errorMsg);
     } finally {
       setIsLoading(false);
     }
@@ -137,6 +132,25 @@ const Profile = () => {
           </div>
         </div>
       </div>
+
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 bg-charcoal bg-opacity-80 flex items-center justify-center z-50 cursor-ink" onClick={() => setShowSuccessModal(false)}>
+          <div className="bg-sage border-4 border-moss p-8 max-w-md w-full mx-4 shadow-brutal transform -rotate-1" onClick={(e) => e.stopPropagation()}>
+            <h2 className="font-display text-2xl font-bold text-cream mb-4">Username Updated!</h2>
+            <p className="font-mono text-sm text-cream mb-6">// changes saved successfully</p>
+            <div className="bg-cream p-4 border-2 border-moss mb-6 font-mono text-charcoal">
+              New username: <span className="font-bold">{user.username}</span>
+            </div>
+            <button
+              onClick={() => setShowSuccessModal(false)}
+              className="w-full px-6 py-3 bg-charcoal hover:bg-ink text-cream font-mono text-sm transition-colors duration-200"
+            >
+              close()
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
