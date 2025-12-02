@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Studio Boards",
+  "name": "Studio Boards - Collaborative Task Manager",
   "icons": [
     {
       "src": "favicon.ico",
