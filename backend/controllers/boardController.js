@@ -81,7 +81,7 @@ exports.getUserBoards = async (req, res) => {
           { collaborators: { some: { id: req.user.id } } },
         ],
       },
-      include: { owner: true, collaborators: true },
+      include: { owner: true, collaborators: true, cards: true },
     });
     res.json(boards);
   } catch (err) {
