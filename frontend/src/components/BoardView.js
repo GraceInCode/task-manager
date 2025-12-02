@@ -91,6 +91,9 @@ const BoardView = () => {
   const { token } = useContext(AppContext);
   const [board, setBoard] = useState(null);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [showAddCardModal, setShowAddCardModal] = useState(false);
+  const [newCardTitle, setNewCardTitle] = useState('');
+  const [selectedList, setSelectedList] = useState('');
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
@@ -167,15 +170,22 @@ const BoardView = () => {
   };
 
   const handleAddCard = async (list) => {
-    const title = prompt('Enter card title:');
-    if (!title) return;
+    setSelectedList(list);
+    setNewCardTitle('');
+    setShowAddCardModal(true);
+  };
+
+  const createCard = async () => {
+    if (!newCardTitle.trim()) return;
     try {
-      const position = board.cards.filter(c => c.listName === list).length;
-      const res = await api.post(`/boards/${id}/cards`, { title, listName: list, position });
+      const position = board.cards.filter(c => c.listName === selectedList).length;
+      const res = await api.post(`/boards/${id}/cards`, { title: newCardTitle, listName: selectedList, position });
       setBoard(prev => ({ ...prev, cards: [...prev.cards, res.data] }));
+      setShowAddCardModal(false);
+      setNewCardTitle('');
     } catch (err) {
       console.error('Add card error:', err);
-      alert('Failed to add card. Please try again.');
+      toast.error('Failed to add card. Please try again.');
     }
   }
 
@@ -183,12 +193,12 @@ const BoardView = () => {
     try {
       const res = await api.post(`/boards/${id}/share`);
       const shareLink = `${window.location.origin}/join?token=${res.data.shareToken}`;
-      navigator.clipboard.writeText(shareLink);
+      await navigator.clipboard.writeText(shareLink);
       toast.success('Share link copied to clipboard!');
       toast.info(shareLink, { autoClose: 8000 });
     } catch (err) {
       console.error('Share error:', err);
-      alert('Failed to generate share link');
+      toast.error('Failed to generate share link');
     }
   };
 
@@ -255,6 +265,39 @@ const BoardView = () => {
               }))
             }}
           />
+        )}
+
+        {/* Add Card Modal */}
+        {showAddCardModal && (
+          <div className="fixed inset-0 bg-charcoal bg-opacity-80 flex items-center justify-center z-50 cursor-ink" onClick={() => setShowAddCardModal(false)}>
+            <div className="bg-sand border-4 border-clay p-8 max-w-md w-full mx-4 shadow-brutal transform rotate-1" onClick={(e) => e.stopPropagation()}>
+              <h2 className="font-display text-2xl font-bold text-charcoal mb-4">Add Card</h2>
+              <p className="font-mono text-sm text-rust mb-6">// {selectedList.toLowerCase().replace(' ', '_')}()</p>
+              <input
+                value={newCardTitle}
+                onChange={(e) => setNewCardTitle(e.target.value)}
+                placeholder="Enter card title..."
+                className="w-full px-6 py-4 bg-cream border-2 border-clay focus:border-rust focus:outline-none font-sans text-charcoal placeholder-fog mb-6"
+                onKeyPress={(e) => e.key === 'Enter' && createCard()}
+                autoFocus
+              />
+              <div className="flex space-x-3">
+                <button
+                  onClick={createCard}
+                  disabled={!newCardTitle.trim()}
+                  className="flex-1 px-6 py-3 bg-rust hover:bg-terracotta disabled:bg-fog disabled:cursor-not-allowed text-cream font-mono text-sm transition-colors duration-200"
+                >
+                  create()
+                </button>
+                <button
+                  onClick={() => setShowAddCardModal(false)}
+                  className="flex-1 px-6 py-3 bg-charcoal hover:bg-ink text-cream font-mono text-sm transition-colors duration-200"
+                >
+                  cancel()
+                </button>
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </DndProvider>

@@ -2,11 +2,15 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../api';
 import { AppContext } from '../context/appContext';
+import { toast } from 'react-toastify';
 
 const Dashboard = () => {
   const [boards, setBoards] = useState([]);
   const [newTitle, setNewTitle] = useState('');
   const [isCreating, setIsCreating] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [showLinkModal, setShowLinkModal] = useState(false);
+  const [shareLink, setShareLink] = useState('');
   const { token, logout } = useContext(AppContext);
   const navigate = useNavigate();
 
@@ -176,20 +180,7 @@ const Dashboard = () => {
         {boards.length > 0 && (
           <div className="mt-20 flex justify-end">
             <button
-              onClick={async () => {
-                const boardOptions = boards.map(b => `${b.id}: ${b.title}`).join('\n');
-                const selection = prompt(`Select a board to share:\n\n${boardOptions}\n\nEnter the number:`);
-                const boardId = parseInt(selection);
-                if (!boardId || !boards.find(b => b.id === boardId)) return;
-                try {
-                  const res = await api.post(`/boards/${boardId}/share`);
-                  const shareLink = `${window.location.origin}/join?token=${res.data.shareToken}`;
-                  navigator.clipboard.writeText(shareLink);
-                  alert(`Share link copied to clipboard:\n\n${shareLink}`);
-                } catch (err) {
-                  alert('Failed to generate share link. Make sure you own this board.');
-                }
-              }}
+              onClick={() => setShowShareModal(true)}
               className="group flex items-center space-x-3 px-6 py-3 bg-sage hover:bg-moss text-cream font-mono text-sm transform hover:-rotate-2 transition-all duration-200 shadow-paper hover:shadow-ink-drop"
             >
               <span>share.link()</span>
@@ -200,6 +191,63 @@ const Dashboard = () => {
           </div>
         )}
       </div>
+
+      {/* Share Modal */}
+      {showShareModal && (
+        <div className="fixed inset-0 bg-charcoal bg-opacity-80 flex items-center justify-center z-50 cursor-ink" onClick={() => setShowShareModal(false)}>
+          <div className="bg-sand border-4 border-clay p-8 max-w-md w-full mx-4 shadow-brutal transform rotate-1" onClick={(e) => e.stopPropagation()}>
+            <h2 className="font-display text-2xl font-bold text-charcoal mb-6">Select Board to Share</h2>
+            <div className="space-y-3 max-h-96 overflow-y-auto mb-6">
+              {boards.map((board) => (
+                <button
+                  key={board.id}
+                  onClick={async () => {
+                    try {
+                      const res = await api.post(`/boards/${board.id}/share`);
+                      const shareLink = `${window.location.origin}/join?token=${res.data.shareToken}`;
+                      await navigator.clipboard.writeText(shareLink);
+                      setShareLink(shareLink);
+                      setShowShareModal(false);
+                      setShowLinkModal(true);
+                    } catch (err) {
+                      toast.error('Failed to generate share link. Make sure you own this board.');
+                    }
+                  }}
+                  className="w-full text-left px-6 py-4 bg-cream hover:bg-coral border-2 border-clay hover:border-rust transition-all duration-200 font-sans text-charcoal transform hover:-rotate-1"
+                >
+                  <div className="font-bold">{board.title}</div>
+                  <div className="font-mono text-xs text-rust mt-1">ID: {board.id}</div>
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={() => setShowShareModal(false)}
+              className="w-full px-6 py-3 bg-charcoal hover:bg-ink text-cream font-mono text-sm transition-colors duration-200"
+            >
+              cancel()
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Share Link Modal */}
+      {showLinkModal && (
+        <div className="fixed inset-0 bg-charcoal bg-opacity-80 flex items-center justify-center z-50 cursor-ink" onClick={() => setShowLinkModal(false)}>
+          <div className="bg-sage border-4 border-moss p-8 max-w-lg w-full mx-4 shadow-brutal transform -rotate-1" onClick={(e) => e.stopPropagation()}>
+            <h2 className="font-display text-2xl font-bold text-cream mb-4">Share Link Copied!</h2>
+            <p className="font-mono text-sm text-cream mb-6">// link copied to clipboard</p>
+            <div className="bg-cream p-4 border-2 border-moss mb-6 break-all font-mono text-xs text-charcoal">
+              {shareLink}
+            </div>
+            <button
+              onClick={() => setShowLinkModal(false)}
+              className="w-full px-6 py-3 bg-charcoal hover:bg-ink text-cream font-mono text-sm transition-colors duration-200"
+            >
+              close()
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
