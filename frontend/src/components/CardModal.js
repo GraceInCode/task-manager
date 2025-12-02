@@ -147,11 +147,11 @@ const CardModal = ({ card, board, onClose, onUpdate }) => {
               >
                 <option value="">Unassigned</option>
                 <option value={board.ownerId}>
-                  👑 {board.owner?.email || "Owner"}
+                  👑 {board.owner?.username || board.owner?.email || "Owner"}
                 </option>
                 {board.collaborators?.map((user) => (
                   <option key={user.id} value={user.id}>
-                    {user.email}
+                    {user.username || user.email}
                   </option>
                 ))}
               </select>
@@ -169,11 +169,11 @@ const CardModal = ({ card, board, onClose, onUpdate }) => {
                       <div className="flex items-center space-x-2 mb-2">
                         <div className="w-6 h-6 bg-charcoal text-terracotta font-display font-bold text-xs flex items-center justify-center transform rotate-12">
                           <span>
-                            {c.user?.email?.charAt(0).toUpperCase() || 'U'}
+                            {(c.user?.username || c.user?.email)?.charAt(0).toUpperCase() || 'U'}
                           </span>
                         </div>
                         <span className="font-mono text-charcoal text-sm">
-                          {c.user?.email || "Someone"}
+                          {c.user?.username || c.user?.email || "Someone"}
                         </span>
                       </div>
                       <p className="font-sans text-charcoal">{c.text}</p>

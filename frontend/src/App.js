@@ -7,6 +7,7 @@ import Register from './components/Auth/Register';
 import Dashboard from './components/Dashboard';
 import BoardView from './components/BoardView';
 import Join from './components/Join';
+import Profile from './components/Profile';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/board/:id" element={<BoardView />} />
         <Route path="/join" element={<Join />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       <ToastContainer position="top-right" autoClose={3000} />
     </AppProvider>

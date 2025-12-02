@@ -5,6 +5,7 @@ import { AppContext } from "../../context/appContext";
 
 const Register = () => {
     const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -15,7 +16,7 @@ const Register = () => {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const res = await api.post('/auth/register', { email, password });
+            const res = await api.post('/auth/register', { email, username, password });
             login(res.data.token);
             navigate('/dashboard');
         } catch (err) {
@@ -53,6 +54,20 @@ const Register = () => {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="your.email@example.com"
+                                required
+                                className="w-full px-6 py-4 bg-cream border-2 border-clay focus:border-terracotta focus:outline-none font-sans text-charcoal placeholder-fog transform focus:rotate-0 transition-all duration-200"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block font-mono text-sm font-medium text-charcoal mb-3 tracking-wide">
+                                username
+                            </label>
+                            <input
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                placeholder="your_username"
                                 required
                                 className="w-full px-6 py-4 bg-cream border-2 border-clay focus:border-terracotta focus:outline-none font-sans text-charcoal placeholder-fog transform focus:rotate-0 transition-all duration-200"
                             />

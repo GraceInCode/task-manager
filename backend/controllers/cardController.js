@@ -57,7 +57,7 @@ exports.createCard = async (req, res) => {
         listName,
         position,
       },
-      include: { assignee: true }
+      include: { assignee: { select: { id: true, email: true, username: true } } }
     });
 
     const io = req.app.get('io');
@@ -88,14 +88,14 @@ exports.updateCard = async (req, res) => {
     if (assigneeId && assigneeId !== card.assigneeId) {
       const assignee = await prisma.user.findUnique({ where: { id: assigneeId } });
       if (assignee) {
-        sendEmail(assignee.email, 'New Task Assigned', `You have been assigned a new task: ${card.title} on board ${card.board.title}`);
+        sendEmail(assignee.email, 'New Task Assigned', `Hi ${assignee.username}, you have been assigned to: ${card.title} on board ${card.board.title}`);
       }
     } 
 
     const updatedCard = await prisma.card.update({
       where: { id: cardId },
       data: { title, description, listName, position },
-      include: { assignee: true }
+      include: { assignee: { select: { id: true, email: true, username: true } } }
     });
     const io = req.app.get('io');
     io.to(card.boardId.toString()).emit('cardUpdated', { card: updatedCard, user: req.user });
@@ -120,7 +120,7 @@ exports.getComments = async (req, res) => {
     const comments = await prisma.comment.findMany({
       where: { cardId },
       orderBy: { timestamp: 'asc' },
-      include: { user: true },  
+      include: { user: { select: { id: true, email: true, username: true } } },  
       });
     res.json(comments);
   } catch (err) {
@@ -148,6 +148,7 @@ exports.addComment = async (req, res) => {
 
     const comment = await prisma.comment.create({
       data: { text, userId: req.user.id, cardId },
+      include: { user: { select: { id: true, email: true, username: true } } }
     });
     const io = req.app.get('io');
     io.to(card.boardId.toString()).emit('commentAdded', { cardId, comment, user: req.user });

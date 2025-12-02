@@ -83,12 +83,20 @@ const Dashboard = () => {
                 <p className="font-mono text-sm text-rust tracking-wide">// creative workspace</p>
               </div>
             </div>
-            <button
-              onClick={logout}
-              className="px-6 py-2 bg-charcoal text-cream font-mono text-sm hover:bg-ink transition-colors duration-200 transform hover:-rotate-1"
-            >
-              exit()
-            </button>
+            <div className="flex items-center space-x-3">
+              <Link
+                to="/profile"
+                className="px-6 py-2 bg-sage text-cream font-mono text-sm hover:bg-moss transition-colors duration-200 transform hover:rotate-1"
+              >
+                profile()
+              </Link>
+              <button
+                onClick={logout}
+                className="px-6 py-2 bg-charcoal text-cream font-mono text-sm hover:bg-ink transition-colors duration-200 transform hover:-rotate-1"
+              >
+                exit()
+              </button>
+            </div>
           </div>
         </div>
       </div>

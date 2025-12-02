@@ -52,9 +52,9 @@ const Card = ({ card, index, listName, onDrop }) => {
             <div className="flex items-center justify-between mt-4">
                 <div className="flex items-center space-x-2">
                     {card.assigneeId && (
-                        <div className="w-7 h-7 bg-charcoal text-terracotta font-display font-bold text-sm flex items-center justify-center transform rotate-12">
+                        <div className="w-7 h-7 bg-charcoal text-terracotta font-display font-bold text-sm flex items-center justify-center transform rotate-12" title={card.assignee?.username || card.assignee?.email}>
                             <span>
-                                {card.assignee?.email?.charAt(0).toUpperCase() || 'A'}
+                                {(card.assignee?.username || card.assignee?.email)?.charAt(0).toUpperCase() || 'A'}
                             </span>
                         </div>
                     )}

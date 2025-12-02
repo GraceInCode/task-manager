@@ -81,7 +81,11 @@ exports.getUserBoards = async (req, res) => {
           { collaborators: { some: { id: req.user.id } } },
         ],
       },
-      include: { owner: true, collaborators: true, cards: true },
+      include: { 
+        owner: { select: { id: true, email: true, username: true } }, 
+        collaborators: { select: { id: true, email: true, username: true } }, 
+        cards: true 
+      },
     });
     res.json(boards);
   } catch (err) {
@@ -102,7 +106,11 @@ exports.getBoard = async (req, res) => {
 
     const board = await prisma.board.findUnique({
       where: { id: parseInt(boardId) },
-      include: { cards: true, collaborators: true },
+      include: { 
+        cards: true, 
+        owner: { select: { id: true, email: true, username: true } },
+        collaborators: { select: { id: true, email: true, username: true } } 
+      },
     });
     if (!board) {
       return res.status(404).json({ msg: 'Board not found' });

@@ -118,15 +118,15 @@ const BoardView = () => {
       const card = data.card || data;
       const user = data.user;
       setBoard(prev => ({ ...prev, cards: prev.cards.map(c => c.id === card.id ? card : c) }));
-      toast.info(`Card updated by ${user?.email || 'another user'}`)
+      toast.info(`Card updated by ${user?.username || user?.email || 'another user'}`)
     });
     socket.on('commentAdded', (data) => {
       const user = data.user;
-      toast.info(`New comment added by ${user?.email || 'another user'}`)
+      toast.info(`New comment added by ${user?.username || user?.email || 'another user'}`)
     })
     socket.on('attachmentAdded', (data) => {
       const user = data.user;
-      toast.info(`New attachment added by ${user?.email || 'another user'}`)
+      toast.info(`New attachment added by ${user?.username || user?.email || 'another user'}`)
     })
 
     return () => {
