@@ -2,6 +2,8 @@
 
 A real-time collaborative task management application with drag-and-drop Kanban boards, built with React, Node.js, Express, Prisma, and Socket.IO.
 
+**Live Site:** https://studio-boards.vercel.app
+
 ## Features
 
 - **User Authentication** - Register/login with JWT
@@ -109,7 +111,8 @@ npm run cypress
 
 ## Deployment
 
-Backend is deployed on Render: `https://task-manager-yjcd.onrender.com`
+- **Frontend:** https://studio-boards.vercel.app
+- **Backend:** https://task-manager-yjcd.onrender.com
 
 ## License
 
